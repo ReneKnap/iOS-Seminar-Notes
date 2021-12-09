@@ -53,7 +53,10 @@
   - Specified length and position in the "point" units
   - Mainly used to interact with the view
 - Image
-  - ToDo SwiftUI
+  - Class of the SwiftUI framework
+  - High Level Way to display image data
+  - Specified length and position in the "point" units
+  - Mainly used to interact with the view
 - CIImage
   - Class of CoreImage framework.
   - Is not a picture itself but has all the information to create a picture
