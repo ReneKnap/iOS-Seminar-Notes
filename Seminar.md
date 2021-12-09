@@ -16,7 +16,8 @@
   - Load/Save Image to album
   - Only filter which create an output image
   - Small preview for each filter in the selection
-  - Example for chained filters
+  - Example for a chained filter
+  - Example for a custom filter (max basic)
   - SwiftUI
   - Outsource code into different files
     - Only what we want to present in a file
@@ -26,7 +27,7 @@
 
 <figure>
   <img src="Images/quartz_c4a7e45.png" alt="quartz_c4a7e45" style="width:67%">
-  <figcaption>Fig: Quartz Composer example<br>
+  <figcaption>Figure: Quartz Composer example<br>
       Source: <a href="https://www.objc.io/images/issue-21/quartz_c4a7e45.png">https://www.objc.io/images/issue-21/quartz_c4a7e45.png</a></figcaption>
 </figure>
 
@@ -74,18 +75,6 @@
 
 - A filter creates a transformation of an image with set values
 
-- The kernel is written in a subset of GLSL, the shading language of OpenGL (glslang)
-
-  - A kernel is a convolution matrix or mask which can be applied to an image.
-
-  - For example:
-
-    ​    Identity:				  Edge detection:
-
-    $\begin{bmatrix}0&0&0\\0&1&0\\0&0&0\end{bmatrix}$            $\begin{bmatrix}0&-1&0\\-1&4&-1\\0&-1&0\end{bmatrix}$
-
-
-
 
 ## Processing Images
 
@@ -99,7 +88,7 @@
 
 <figure>
   <img src="Images/architecture_2x.png" alt="architecture_2x" style="width:67%">
-  <figcaption>Fig: Core Image pipeline<br>
+  <figcaption>Figure: Core Image pipeline<br>
       Source: <a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/architecture_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/architecture_2x.png</a></figcaption>
 </figure>
 
@@ -180,13 +169,13 @@ sepiaFilter.setValue(1.0, forKey: kCIInputIntensityKey)
 
 <figure>
   <img src="Images/filter_chain02_2x.png" alt="filter_chain02_2x" style="width:67%">
-  <figcaption>Fig: Example "recipe"<br>
+  <figcaption>Figure: Example "recipe"<br>
       Source: <a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_chain02_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_chain02_2x.png</a></figcaption>
 </figure>
 
 <figure>
   <img src="Images/filter_chain01_2x.png" alt="filter_chain01_2x" style="width:67%">
-  <figcaption>Fig: Chained filters<br>
+  <figcaption>Figure: Chained filters<br>
       Source: <a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_chain01_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_chain01_2x.png</a></figcaption>
 </figure>
 
@@ -224,11 +213,11 @@ ToDo: Testen
 
 <figure>
   <img src="Images/rendered2x-1584571993.png" alt="rendered2x-1584571993" style="width:67%">
-  <figcaption>Fig: Detecting Objects in Still Images<br>
+  <figcaption>Figure: Detecting Objects in Still Images<br>
       Source: <a href="https://docs-assets.developer.apple.com/published/a276deb100/rendered2x-1584571993.png">https://docs-assets.developer.apple.com/published/a276deb100/rendered2x-1584571993.png</a></figcaption>
 </figure>
 
-https://docs-assets.developer.apple.com/published/a276deb100/rendered2x-1584571993.png
+ToDo: Recreate that image or own example
 
 ## Auto Enhancing Images
 
@@ -272,15 +261,55 @@ https://docs-assets.developer.apple.com/published/a276deb100/rendered2x-15845719
     - Only use the filters
     - Only see the inputs and outputs.
     - Are able to set the parameters of the inputs
-  - Filter Creators
+    - The methods attributes and outputImage are provided for the Filter Client
 
 A filter client does not see the blue area, a filter creator has to specify it
 
 <figure>
   <img src="Images/filter_anatomy_2x.png" alt="filter_anatomy_2x" style="width:67%">
-  <figcaption>Fig: The components of a typical filter<br>
+  <figcaption>Figure: The components of a typical filter<br>
       Source: <a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_anatomy_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_anatomy_2x.png</a></figcaption>
 </figure>
+
+- Filter Creators
+
+  - Sampler
+
+    - Fetch pixels from sources
+  - provides the data to the kernel.
+  
+- Kernel
+  
+  - Processes the pixels
+  
+  - In the kernel you can specify how the Filter calculates the pixel for the resulting image
+  
+    - A kernel is a convolution matrix or mask which can be applied to an image.
+  
+    - For example:
+  
+      ​    Identity:				  Edge detection:
+  
+      $\begin{bmatrix}0&0&0\\0&1&0\\0&0&0\end{bmatrix}$            $\begin{bmatrix}0&-1&0\\-1&4&-1\\0&-1&0\end{bmatrix}$
+  
+    - The kernel is written in a subset of GLSL, the OpenGL Shading LanguageL (glslang)
+
+<figure>
+  <img src="Images/pixel_processing_path_2x.png" alt="pixel_processing_path_2x" style="width:67%">
+  <figcaption>Figure: The pixel processing path<br>
+      Source: <a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/pixel_processing_path_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/pixel_processing_path_2x.png</a></figcaption>
+</figure>
+
+- The following steps are needed to create a custom filter
+  1. Write the Kernel Code
+  2. Use Quartz Composer to Test the Kernel Routine
+  3. Declare an Interface for the Filter
+  4. Write an Init Method for the CIKernel Object
+  5. Write a Custom Attributes Method
+  6. Write an Output Image Method
+  7. Register the Filter
+  8. Write a Method to Create Instances of the Filter
+
 
 
 
@@ -305,7 +334,6 @@ A filter client does not see the blue area, a filter creator has to specify it
 
 
 
-
 ## References
 
 https://developer.apple.com
@@ -321,6 +349,8 @@ https://developer.apple.com
 ​	https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185
 
 ​	https://developer.apple.com/documentation/vision/detecting_objects_in_still_images
+
+​	https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/ImageUnitTutorial/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004531
 
 https://www.objc.io
 
