@@ -33,7 +33,7 @@
 - Automatic image enhancement
 - Chain multiple filters together 
 - Highly hardware optimized image processing
-- Near real-time performance for still and video images
+- Can achieve real-time performance for still and video images
 - No need for understanding the details of OpenGL and Metal to use the technology.
 
 ### Different Image Classes
@@ -76,10 +76,6 @@
 
     $\begin{bmatrix}0&0&0\\0&1&0\\0&0&0\end{bmatrix}$            $\begin{bmatrix}0&-1&0\\-1&4&-1\\0&-1&0\end{bmatrix}$
 
-- Filters can be chained in a row, since the output of the first filter can become the input of the second.
-
-  - Core Image combines chained filters intelligently so that they are calculated more efficiently.
-  - Core image defers the work until the finished image is requested
 
 
 
@@ -150,7 +146,8 @@ let allSepiaInputKeys = sepiaFilter.inputKeys
 print(allSepiaInputKeys)
 ```
 
-- If you want to display more detailed information for each parameter, such as an explanation, the min/max/default value and more as follows:
+- If you want to display more detailed information for each parameter, such as an explanation, the min/max/default value and more
+  - It is a "build-in" reference documentation for it's filters
 
 ```swift
 let allSepiaAttributes = sepiaFilter.attributes
@@ -164,6 +161,13 @@ sepiaFilter.setValue(1.0, forKey: kCIInputIntensityKey)
 ```
 
 - Unfortunately, the parameters are not type-safe and must therefore be set very carefully.
+
+### Chainging Filters together
+
+- Filters can be chained in a row, since the output of the first filter can become the input of the second.
+  - Core Image combines chained filters intelligently so that they are calculated more efficiently.
+  - Core image defers the work until the finished image is requested
+- A compound effect filter can be included in a subclass of CIFilter for easy reuse.
 
 
 
@@ -189,9 +193,21 @@ ToDo: Testen
 
 ## Detecting Faces/ Objects in an Image
 
+- Detect human face features
+  - Detect eyes
+  - Track one specific face over time in a video
+
 
 
 ## Auto Enhancing Images
+
+- Core Image can analyze the quality of an image
+- It provide a set of filters with optimal settings for adjusting for example
+  - hue
+  - contrast
+  - tone color
+  - correcting for flash artifacts such as red eye
+- You only have to call one function 
 
 
 
@@ -199,13 +215,18 @@ ToDo: Testen
 
 
 
-Core Graphics?
+## Further Topics
+
+### Core Graphics
+
+### CIImageAccumulator
+
+- Stores its contents between different rendering steps
+- Example: Interactive painting
 
 
 
 
-
-## 
 
 
 
