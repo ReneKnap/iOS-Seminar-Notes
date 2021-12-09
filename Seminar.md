@@ -13,7 +13,14 @@
 ## Ideas
 
 - Program with which you can set all filters for your own photos and make face detection or object detection.
+  - Small preview for each filter in the selection
 - Quartz Composer
+
+<figure>
+  <img src="Images/quartz_c4a7e45.png" alt="quartz_c4a7e45" style="width:67%">
+  <figcaption>Fig: Quartz Composer example<br>
+      Source: <a href="https://www.objc.io/images/issue-21/quartz_c4a7e45.png">https://www.objc.io/images/issue-21/quartz_c4a7e45.png</a></figcaption>
+</figure>
 
 
 
@@ -21,7 +28,32 @@
 
 ### Core Image
 
+- Built-in Filters
+- Feature detection
+- Automatic image enhancement
+- Chain multiple filters together 
 - Highly hardware optimized image processing
+- Near real-time performance for still and video images
+- No need for understanding the details of OpenGL and Metal to use the technology.
+
+### Different Image Classes
+
+- UIImage
+  - Class of the UIKit framework
+  - High Level Way to display image data
+  - Specified length and position in the "point" units
+  - Mainly used to interact with the view
+- Image
+  - ToDo SwiftUI
+- CIImage
+  - Class of CoreImage framework.
+  - Is not a picture itself but has all the information to create a picture
+  - Is used to apply filters with Core Image
+- CGImage
+  - Class of CoreGraphics framework.
+  - Can only represent bitmaps
+  - Specifying the length and position in the "pixel" unit
+  - Is used to apply blend modes and masking
 
 ### Context
 
@@ -61,18 +93,15 @@
 2. Pass an image to be filtered
 3. Get the completely filtered image
 
-#### Creating an input image
+<figure>
+  <img src="Images/architecture_2x.png" alt="architecture_2x" style="width:67%">
+  <figcaption>Fig: Core Image pipeline<br>
+      Source: <a href=https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/architecture_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/architecture_2x.png</a></figcaption>
+</figure>
 
-- UIImage
-  - High Level Way to display image data
-- Image
-  - ToDo SwiftUI
-- CIImage
-  - Is not a picture itself but has all the information to create a picture
-  - Is used to apply filters with Core Image
-- CGImage
-  - Can only represent bitmaps
-  - Is used to apply blend modes and masking
+ToDo: Recreate that image or own example
+
+#### Creating an input image
 
 #### We need a CIImage and  for example it can be easily created with a UIImage.
 
@@ -140,9 +169,19 @@ sepiaFilter.setValue(1.0, forKey: kCIInputIntensityKey)
 
 ## Performance
 
-#### test
+ToDo: Testen
 
-- 
+- When is cpu used?
+- When is gpu used?
+- Expenses to create a CIContext
+
+
+
+- Whenever possible, Core Image will perform filtering on the GPU.
+  - We can force Core Image to use the CPU with ``kCIContextUseSoftwareRenderer = true``
+- In Xcode you can write diagnostic information for filtering to the console with the option CI_PRINT_TREE = 1 
+
+
 
 
 
@@ -172,21 +211,31 @@ Core Graphics?
 
 ## References
 
-https://developer.apple.com/library/archive/documentation/GraphicsImaging/Reference/CIKernelLangRef/Introduction/Introduction.html
+https://developer.apple.com
 
-https://developer.apple.com/documentation/coreimage
+​	https://developer.apple.com/library/archive/documentation/GraphicsImaging/Reference/CIKernelLangRef/Introduction/Introduction.html
 
-https://developer.apple.com/library/archive/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/uid/TP40004346
+​	https://developer.apple.com/documentation/coreimage
 
-https://www.objc.io/issues/21-camera-and-photos/core-image-intro/
+​	https://developer.apple.com/library/archive/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/uid/TP40004346
 
-https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185
+​	https://developer.apple.com/documentation/coreimage/processing_an_image_using_built-in_filters
 
-https://developer.apple.com/documentation/coreimage/processing_an_image_using_built-in_filters
+​	https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185
 
-https://titanwolf.org/Network/Articles/Article?AID=543f667d-673f-4fdd-9df9-9830126f8a71
+https://www.objc.io
 
-https://medium.com/@ranleung/uiimage-vs-ciimage-vs-cgimage-3db9d8b83d94
+​	https://www.objc.io/issues/21-camera-and-photos/core-image-intro/
+
+https://titanwolf.org
+
+​	https://titanwolf.org/Network/Articles/Article?AID=543f667d-673f-4fdd-9df9-9830126f8a71
+
+​	https://titanwolf.org/Network/Articles/Article?AID=ffc1d7a3-f8bb-49bb-9644-580c716cad55
+
+https://medium.com
+
+​	https://medium.com/@ranleung/uiimage-vs-ciimage-vs-cgimage-3db9d8b83d94
 
 
 
