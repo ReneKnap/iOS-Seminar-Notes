@@ -16,6 +16,7 @@
   - Load/Save Image to album
   - Only filter which create an output image
   - Small preview for each filter in the selection
+  - Example for chained filters
   - SwiftUI
   - Outsource code into different files
     - Only what we want to present in a file
@@ -175,8 +176,19 @@ sepiaFilter.setValue(1.0, forKey: kCIInputIntensityKey)
   - Core Image combines chained filters intelligently so that they are calculated more efficiently.
   - Core image defers the work until the finished image is requested
 - A compound effect filter can be included in a subclass of CIFilter for easy reuse.
+- Apple calls it "recipe"
 
+<figure>
+  <img src="Images/filter_chain02_2x.png" alt="filter_chain02_2x" style="width:67%">
+  <figcaption>Fig: Example "recipe"<br>
+      Source: <a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_chain02_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_chain02_2x.png</a></figcaption>
+</figure>
 
+<figure>
+  <img src="Images/filter_chain01_2x.png" alt="filter_chain01_2x" style="width:67%">
+  <figcaption>Fig: Chained filters<br>
+      Source: <a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_chain01_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_chain01_2x.png</a></figcaption>
+</figure>
 
 ## Performance
 
@@ -191,6 +203,12 @@ ToDo: Testen
 - Whenever possible, Core Image will perform filtering on the GPU.
   - We can force Core Image to use the CPU with ``kCIContextUseSoftwareRenderer = true``
 - In Xcode you can write diagnostic information for filtering to the console with the option CI_PRINT_TREE = 1 
+
+### Performance Best Practices
+
+- Do not always create a new CIContext 
+  - Contexts store a lot of state information; it’s more efficient to reuse them.
+- Use smaller images when possible
 
 
 
@@ -248,6 +266,22 @@ https://docs-assets.developer.apple.com/published/a276deb100/rendered2x-15845719
 
 ## Creating Custom Filters
 
+- Core Image provides Support for custom filters
+- Apple differentiates between Filter Clients and Filter Creators
+  - Filter Clients
+    - Only use the filters
+    - Only see the inputs and outputs.
+    - Are able to set the parameters of the inputs
+  - Filter Creators
+
+A filter client does not see the blue area, a filter creator has to specify it
+
+<figure>
+  <img src="Images/filter_anatomy_2x.png" alt="filter_anatomy_2x" style="width:67%">
+  <figcaption>Fig: The components of a typical filter<br>
+      Source: <a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_anatomy_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/filter_anatomy_2x.png</a></figcaption>
+</figure>
+
 
 
 ## Further Topics
@@ -259,7 +293,14 @@ https://docs-assets.developer.apple.com/published/a276deb100/rendered2x-15845719
 - Stores its contents between different rendering steps
 - Example: Interactive painting
 
+###  AV Foundation
 
+- Processing Video
+
+### Processing Game Content with SpriteKit and SceneKit
+
+- Filters can be applied to each part of SpriteKit and SceneKit
+  -  using the SKEffectNode
 
 
 
