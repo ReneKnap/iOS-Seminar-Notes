@@ -13,7 +13,14 @@
 ## Ideas
 
 - Program with which you can set all filters for your own photos and make face detection or object detection.
+  - Load/Save Image to album
+  - Only filter which create an output image
   - Small preview for each filter in the selection
+  - SwiftUI
+  - Outsource code into different files
+    - Only what we want to present in a file
+  - Code Documentation
+    - Understanding each function call
 - Quartz Composer
 
 <figure>
@@ -92,7 +99,7 @@
 <figure>
   <img src="Images/architecture_2x.png" alt="architecture_2x" style="width:67%">
   <figcaption>Fig: Core Image pipeline<br>
-      Source: <a href=https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/architecture_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/architecture_2x.png</a></figcaption>
+      Source: <a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/architecture_2x.png">https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/art/architecture_2x.png</a></figcaption>
 </figure>
 
 ToDo: Recreate that image or own example
@@ -187,27 +194,55 @@ ToDo: Testen
 
 
 
-
-
-
-
 ## Detecting Faces/ Objects in an Image
 
 - Detect human face features
-  - Detect eyes
-  - Track one specific face over time in a video
+  - Eye and mouth positions
+  - Multiple faces possible
+  - Performs face detection, not recognition
+- Rectangles
+- QRCode
+- Text
 
+<figure>
+  <img src="Images/rendered2x-1584571993.png" alt="rendered2x-1584571993" style="width:67%">
+  <figcaption>Fig: Detecting Objects in Still Images<br>
+      Source: <a href="https://docs-assets.developer.apple.com/published/a276deb100/rendered2x-1584571993.png">https://docs-assets.developer.apple.com/published/a276deb100/rendered2x-1584571993.png</a></figcaption>
+</figure>
 
+https://docs-assets.developer.apple.com/published/a276deb100/rendered2x-1584571993.png
 
 ## Auto Enhancing Images
 
 - Core Image can analyze the quality of an image
+
 - It provide a set of filters with optimal settings for adjusting for example
-  - hue
-  - contrast
-  - tone color
-  - correcting for flash artifacts such as red eye
+
+  - Hue
+  - Contrast
+  - Tone color
+  - Analyzes an image for its histogram
+  - Correcting for flash artifacts such as red eye
+
+- Is returns an array of CIFilters with preset parameter values
+
+- Filters that Core Image uses to enhance an image
+
+  | Filter                  | Purpose                                                      |
+  | :---------------------- | :----------------------------------------------------------- |
+  | CIRedEyeCorrection      | Repairs red/amber/white eye due to camera flash              |
+  | CIFaceBalance           | Adjusts the color of a face to give pleasing skin tones      |
+  | CIVibrance              | Increases the saturation of an image without distorting the skin tones |
+  | CIToneCurve             | Adjusts image contrast                                       |
+  | CIHighlightShadowAdjust | Adjusts shadow details                                       |
+
 - You only have to call one function 
+
+   ``autoAdjustmentFilters`` or ``autoAdjustmentFiltersWithOptions``
+
+  In the options you can set the image orientation and whether you want to remove red eyes or not.
+
+  
 
 
 
@@ -244,6 +279,8 @@ https://developer.apple.com
 
 ​	https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185
 
+​	https://developer.apple.com/documentation/vision/detecting_objects_in_still_images
+
 https://www.objc.io
 
 ​	https://www.objc.io/issues/21-camera-and-photos/core-image-intro/
@@ -257,6 +294,8 @@ https://titanwolf.org
 https://medium.com
 
 ​	https://medium.com/@ranleung/uiimage-vs-ciimage-vs-cgimage-3db9d8b83d94
+
+​	https://medium.com/eureka-engineering/its-in-my-opinion-the-same-for-online-dating-and-your-profile-pictures-cc63bf3b7752
 
 
 
